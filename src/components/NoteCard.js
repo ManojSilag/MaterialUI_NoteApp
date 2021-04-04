@@ -14,12 +14,41 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { DeleteOutlined } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core";
+import { yellow, green, pink, blue } from "@material-ui/core/colors";
+
+
+const useStyles = makeStyles(() => {
+  return {
+    avatar: {
+      backgroundColor: (note) => {
+        if (note.category === "work") {
+          return yellow[700];
+        }
+        if (note.category === "money") {
+          return green[500];
+        }
+        if (note.category === "todos") {
+          return pink[500];
+        }
+        return blue[500];
+      },
+    },
+  };
+});
 
 export default function NoteCard({ note, handleDelete }) {
+  const classes = useStyles(note);
+
   return (
     <div>
-      <Card elevation={2}>
+      <Card elevation={2} className={classes.test}>
         <CardHeader
+          avatar={
+            <Avatar className={classes.avatar}>
+              {note.category[0].toUpperCase()}
+            </Avatar>
+          }
           action={
             <IconButton onClick={() => handleDelete(note.id)}>
               <DeleteOutlined />
